@@ -1,10 +1,10 @@
 import React from "react";
 
 const ListGroup = ({
-  selectedItem,
   items,
   textProperty,
   valueProperty,
+  selectedItem,
   onItemSelected
 }) => {
   return (
