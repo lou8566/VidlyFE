@@ -23,10 +23,11 @@ class Movies extends Component {
 
   async componentDidMount() {
     const { data } = await getGenres();
-    const genres = [{ _id: "", name: "All Genres" }, ...data];
+    const allGenres = { _id: "", name: "All Genres" };
+    const genres = [allGenres, ...data];
 
     const { data: movies } = await getMovies();
-    this.setState({ movies, genres });
+    this.setState({ movies, genres, selectedGenre: allGenres });
   }
 
   handleDelete = async movie => {
