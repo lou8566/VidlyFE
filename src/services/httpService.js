@@ -10,16 +10,21 @@ axios.interceptors.response.use(null, error => {
 
   if (!expectedError) {
     console.log("Logging the error:", error);
-    //  logger.log(error);
+    //logger.log(error);
     toast.error(error.message);
   }
 
   return Promise.reject(error);
 });
 
+function setJwt(jwt) {
+  axios.defaults.headers.common["x-auth-token"] = jwt;
+}
+
 export default {
   get: axios.get,
   post: axios.post,
   put: axios.put,
-  delete: axios.delete
+  delete: axios.delete,
+  setJwt
 };

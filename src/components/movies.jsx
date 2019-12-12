@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import Pagination from "./common/pagination";
@@ -7,7 +8,6 @@ import Paginate from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import SearchBox from "./common/searchBox";
 import { Link } from "react-router-dom";
-import _ from "lodash";
 import { toast } from "react-toastify";
 
 class Movies extends Component {
@@ -103,6 +103,7 @@ class Movies extends Component {
       selectedGenre,
       sortColumn
     } = this.state;
+    const { user } = this.props;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -118,17 +119,20 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
-            to="/movies/new"
-            className="btn btn-primary"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {user && (
+            <Link
+              to="/movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
 
           <p>Showing {totalCount} movies in the database</p>
           <SearchBox value={this.searchQuery} onChange={this.handleSearch} />
           <MoviesTable
+            user={user}
             movies={movies}
             sortColumn={sortColumn}
             onLike={this.handleLiked}
